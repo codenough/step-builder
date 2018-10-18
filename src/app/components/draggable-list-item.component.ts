@@ -16,5 +16,6 @@ export class DraggableListItemComponent {
   @Input() imageSource: string;
   @Input() name: string;
   @Input() description: string;
-  @Output() handleSettings: EventEmitter<void> = new EventEmitter();
+  @Output() showSettings: EventEmitter<void> = new EventEmitter();
+  @Output() addConnection: EventEmitter<void> = new EventEmitter();
 }
