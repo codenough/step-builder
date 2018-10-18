@@ -6,7 +6,8 @@
         [name]="conf.name"
         [description]="conf.description"
         [imageSource]="conf.image"
-        (handleSettings)="addRandomStep(stepIndex)">
+        (showSettings)="openSettings(conf.typeId)"
+        (addConnection)="addRandomStep(stepIndex)">
       </draggable-list-item>
     </div>
 

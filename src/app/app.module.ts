@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
@@ -10,12 +11,11 @@ import { HomeComponent } from './components/home.component';
 import { TemplateConfigResolver } from './services/template-config.resolver';
 import { TemplateConfigService } from './services/template-config.service';
 
-
 const appRoutes: Routes = [
   { path: 'steps-builder',
     component: DraggableListComponent,
     resolve: {
-      configTemplates: TemplateConfigResolver
+      templates: TemplateConfigResolver
     } },
   {
     path: 'home',
@@ -25,7 +25,6 @@ const appRoutes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full'
   }
-  // { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
@@ -38,7 +37,8 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     DragulaModule.forRoot(),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],
   providers: [
     TemplateConfigService,

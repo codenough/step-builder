@@ -1,3 +1,4 @@
+import { TemplateConfigService, IStepDto } from './../services/template-config.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
@@ -23,17 +24,21 @@ export class DraggableListComponent implements OnInit, OnDestroy {
 
   newConfig: IStep[] = [];
 
-  steps: IStep[] = [];
+  steps: IStepDto[] = [];
 
   constructor(private dragulaService: DragulaService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private templateConfigService: TemplateConfigService) {}
 
   ngOnInit(): void {
     this.route.data
       .pipe(
         takeUntil(this.ngUnsubscribe),
-        map((data) => data.configTemplates))
-      .subscribe((config) => this.steps = config);
+        map((data) => data.templates)
+      )
+      .subscribe((templates: IStepDto[]) => {
+          this.steps = templates;
+      });
 
     this.dragulaService.createGroup(this.draggerContainerName, {
       copy: (_el, source) => {
@@ -65,6 +70,9 @@ export class DraggableListComponent implements OnInit, OnDestroy {
           }
           this.updateChildren(previouseSourceItem, followingSourceItem && followingSourceItem.id);
           this.updateParentId(followingSourceItem, previouseSourceItem && previouseSourceItem.id);
+        } else {
+          item.parentId = '0';
+          item.children = new Set<string>();
         }
         this.updateChildren(previouseTargetItem, item.id);
         this.updateParentId(followingTargetItem, item.id);
@@ -81,10 +89,19 @@ export class DraggableListComponent implements OnInit, OnDestroy {
     return item.typeId;
   }
 
+  openSettings(id: string): void {
+    this.templateConfigService.getYamlConfig(id)
+      .subscribe((v) => console.log(v));
+  }
+
   addRandomStep(index: number): void {
     const randomIndex = _.random(0, this.steps.length - 1);
-    const randomStep = this.steps[randomIndex];
-    randomStep.id = uuid4();
+    const randomStep = {
+      ...this.steps[randomIndex],
+      id: uuid4(),
+      children: new Set<string>(),
+      parentId: '0'
+    };
     const previouseTargetItem = this.newConfig[index - 1];
     const followingTargetItem = this.newConfig[index + 1];
     this.updateChildren(previouseTargetItem, randomStep.id);
