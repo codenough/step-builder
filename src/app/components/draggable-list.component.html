@@ -1,0 +1,27 @@
+<div class="draggable-list__container">
+    <div [dragula]="draggerContainerName" id="left" [(dragulaModel)]="newConfig">
+        <draggable-list-item *ngFor="let conf of newConfig; index as stepIndex; trackBy: trackByItemIdFn"
+        [class.hasParent]="conf.parentId !== '0'"
+        [class.hasChildren]="conf.children.size > 0"
+        [name]="conf.name"
+        [description]="conf.description"
+        [imageSource]="conf.image"
+        (handleSettings)="addRandomStep(stepIndex)">
+      </draggable-list-item>
+    </div>
+
+
+    <section class="draggable-list__config-templates">
+        <h1 class="draggable-list__section-header">Add Workflow Step</h1>
+        <h4 class="draggable-list__group-header">GROUP NAME</h4>
+        <div [dragula]="draggerContainerName" id="right" [(dragulaModel)]="steps">
+            <draggable-list-item *ngFor="let step of steps; trackBy: trackByItemTypeIdFn"
+              [class.noConnections]="true"
+              [name]="step.name"
+              [description]="step.description"
+              [imageSource]="step.image">
+            </draggable-list-item>
+        </div>
+    </section>
+</div>
+

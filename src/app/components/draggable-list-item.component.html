@@ -1,0 +1,18 @@
+<div class="draggable-list-item__container">
+  <div class="draggable-list-item__indicator-wrapper">
+      <span class="draggable-list-item__indicator">⋮</span>
+      <span class="draggable-list-item__indicator">⋮</span>
+  </div>
+  <img class="draggable-list-item__icon" alt="Config icon" [src]="imageSource" />
+  <div class="draggable-list-item__info">
+      <h4 class="draggable-list-item__info--name">{{name | uppercase}}</h4>
+      <h6 class="draggable-list-item__info--description">{{description}}</h6>
+  </div>
+  <i class="material-icons md-18 draggable-list-item__settings"
+    (click)="handleSettings.emit()">settings</i>
+  <div class="draggable-list-item__connection-icon">
+    <span class="draggable-list-item__connection-button"></span>
+    <i class="material-icons md-16 draggable-list-item__add-icon"
+    (click)="handleSettings.emit()">add</i>
+  </div>
+</div>

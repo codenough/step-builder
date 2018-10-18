@@ -1,0 +1,199 @@
+$circle-radius: 6px;
+$border-width: 1px;
+$circle-translate: 50%;
+$margin-between-blocks: 50px;
+
+.draggable-list-item__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 20px 5px;
+  height: 92px;
+  width: 326px;
+  border: 1px solid #ececec;
+  border-radius: 2px;
+  box-sizing: border-box;
+  background-color: #fff;
+  position: relative;
+  margin-top: #{$margin-between-blocks / 2};
+  margin-bottom: #{$margin-between-blocks / 2};
+}
+
+:host-context(.hasParent) .draggable-list-item__container::before {
+  content: '';
+  display: inline-block;
+  width: #{$circle-radius * 2};
+  height: $circle-radius;
+  border-bottom-left-radius: $circle-radius;
+  border-bottom-right-radius: $circle-radius;
+  border: $border-width solid #ececec;
+  border-top: 0;
+  background-color: #f5faf9;
+  position: absolute;
+  top: -$border-width;
+  left: $circle-translate;
+  transform: translateX(-$circle-translate);
+}
+
+:host-context(.hasChildren) .draggable-list-item__container::after{
+  content: '';
+  display: inline-block;
+  width: #{$circle-radius * 2};
+  height: $circle-radius;
+  border-top-left-radius: $circle-radius;
+  border-top-right-radius: $circle-radius;
+  border: $border-width solid #ececec;
+  border-bottom: 0;
+  background-color: #f5faf9;
+  position: absolute;
+  bottom: -$border-width;
+  left: $circle-translate;
+  transform: translateX(-$circle-translate);
+}
+
+.draggable-list-item__indicator {
+  cursor: grab;
+  color: #d8d8d8;
+  font-weight: bold;
+}
+
+.draggable-list-item__indicator-wrapper {
+  width: 14px;
+}
+
+.draggable-list-item__icon {
+  width: 40px;
+  height: 40px;
+  padding: 0 10px;
+}
+
+.draggable-list-item__info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.draggable-list-item__info--description {
+  margin: 0;
+  color: #939393;
+}
+
+.draggable-list-item__info--name {
+  margin: 0;
+  color: #4e545d;
+}
+
+.draggable-list-item__settings {
+  cursor: pointer;
+}
+
+:host-context(.hasChildren) {
+  .draggable-list-item__connection-icon {
+    width: 2px;
+    height: $margin-between-blocks;
+    position: absolute;
+    left: $circle-translate;
+    transform: translateX(-$circle-translate);
+    bottom: -#{$margin-between-blocks + $border-width};
+    background-color: #ececec;
+    z-index: 1;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: $circle-radius;
+      height: $circle-radius;
+      border-radius: 50%;
+      background-color: #ececec;
+      position: absolute;
+      top: -#{$circle-radius / 2};
+      left: $circle-translate;
+      transform: translateX(-$circle-translate);
+    }
+
+    &::after {
+      content: '';
+      display: inline-block;
+      width: $circle-radius;
+      height: $circle-radius;
+      border-radius: 50%;
+      background-color: #ececec;
+      position: absolute;
+      bottom: -#{$circle-radius / 2};
+      left: $circle-translate;
+      transform: translateX(-$circle-translate);
+    }
+
+    &:hover {
+      &::after,
+      &::before {
+        background-color: #23b4a4;
+      }
+
+      .draggable-list-item__connection-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: #{$border-width*2} solid #ececec;
+        background-color: #fff;
+        width: 23px;
+        height: 23px;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &::before {
+          content: '';
+          cursor: pointer;
+          display: inline-block;
+          width: 17px;
+          height: 17px;
+          background-color: #23b4a4;
+          border-radius: 50%;
+          position: absolute;
+          top: $circle-translate;
+          left: $circle-translate;
+          transform: translate(-$circle-translate, -$circle-translate);
+        }
+      }
+
+      .draggable-list-item__add-icon {
+        display: inline-block;
+        color: #fff;
+        position: absolute;
+        cursor: pointer;
+        top: $circle-translate;
+        left: $circle-translate;
+        transform: translate(-$circle-translate, -$circle-translate);
+      }
+    }
+  }
+}
+
+.draggable-list-item__add-icon {
+  display: none;
+}
+
+:host-context(.noConnections) {
+  .draggable-list-item__container {
+    width: 220px;
+    height: 146px;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: grab;
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .draggable-list-item__info {
+    flex-grow: 0;
+  }
+
+  .draggable-list-item__info--description,
+  .draggable-list-item__settings,
+  .draggable-list-item__indicator {
+    display: none;
+  }
+}

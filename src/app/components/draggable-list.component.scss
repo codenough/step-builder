@@ -1,0 +1,42 @@
+$drawer-width: 40%;
+
+.draggable-list__container {
+  display: flex;
+  min-height: 100%;
+  overflow-y: auto;
+}
+
+#left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  min-height: 100%;
+  flex: 1;
+}
+
+#right {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: flex-start;
+}
+
+.draggable-list__config-templates {
+  width: $drawer-width;
+  background-color: #fff;
+  padding: 40px;
+  box-sizing: border-box;
+  box-shadow: -6px 0 6px rgba(0, 0, 0, 0.1);
+  min-height: 100%;
+  height: auto;
+}
+
+.draggable-list__section-header {
+  color: #939393;
+  margin-top: 0;
+}
+
+.draggable-list__group-header {
+  color: #4e545d;
+}

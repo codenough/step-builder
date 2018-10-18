@@ -1,0 +1,20 @@
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output
+  } from '@angular/core';
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'draggable-list-item',
+  templateUrl: 'draggable-list-item.component.html',
+  styleUrls: ['draggable-list-item.component.scss']
+})
+
+export class DraggableListItemComponent {
+  @Input() imageSource: string;
+  @Input() name: string;
+  @Input() description: string;
+  @Output() handleSettings: EventEmitter<void> = new EventEmitter();
+}
