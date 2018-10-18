@@ -1,59 +1,36 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
-export interface IStep {
+export interface IStep extends IStepDto {
   id: string;
-  typeId: string;
   parentId: string;
+  children: Set<string>;
+}
+
+export interface IStepConfig {
+  yamlConfig: string;
+}
+
+export interface IStepDto {
+  typeId: string;
   name: string;
   description: string;
   image: string;
-  children: Set<string>;
 }
+
+const templatesUrl = 'http://localhost:5000/api/v1/templates';
 
 @Injectable()
 export class TemplateConfigService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getProfileTemlates(): Observable<IStep[]> {
-    return of([
-      {
-        id: '',
-        parentId: '0',
-        typeId: '1',
-        name: 'Build',
-        description: 'create build',
-        image: 'https://via.placeholder.com/40x40',
-        children: new Set<string>()
-      },
-      {
-        id: '',
-        parentId: '0',
-        typeId: '2',
-        name: 'Test',
-        description: 'run unit tests',
-        image: 'https://via.placeholder.com/40x40',
-        children: new Set<string>()
-      },
-      {
-        id: '',
-        parentId: '0',
-        typeId: '3',
-        name: 'Deploy',
-        description: 'deploy build',
-        image: 'https://via.placeholder.com/40x40',
-        children: new Set<string>()
-      },
-      {
-        id: '',
-        parentId: '0',
-        typeId: '4',
-        name: 'Scale',
-        description: 'scale app',
-        image: 'https://via.placeholder.com/40x40',
-        children: new Set<string>()
-      }
-    ]);
+  getProfileTemlates(): Observable<IStepDto[]> {
+    return this.http.get<IStepDto[]>(templatesUrl);
+  }
+
+  getYamlConfig(id: string): Observable<IStepConfig> {
+    return this.http.get<IStepConfig>(`${templatesUrl}/${id}`);
   }
 }
