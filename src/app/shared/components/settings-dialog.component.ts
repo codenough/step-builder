@@ -18,7 +18,7 @@ export class SettingsDialogComponent {
     public dialogRef: MatDialogRef<SettingsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IDialogData<string>) {}
 
-  onNoClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 

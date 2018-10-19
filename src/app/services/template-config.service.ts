@@ -30,7 +30,11 @@ export class TemplateConfigService {
     return this.http.get<IStepDto[]>(templatesUrl);
   }
 
+  getRandomTemlate(): Observable<IStepDto> {
+    return this.http.get<IStepDto>(`${templatesUrl}/random`);
+  }
+
   getYamlConfig(id: string): Observable<IStepConfig> {
-    return this.http.get<IStepConfig>(`${templatesUrl}/${id}`);
+    return this.http.get<IStepConfig>(`${templatesUrl}/${id}/config`);
   }
 }

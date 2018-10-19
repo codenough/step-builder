@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { IStepDto, TemplateConfigService } from './template-config.service';
 
+
 @Injectable()
 export class TemplateConfigResolver implements Resolve<IStepDto[]> {
   constructor(private templateConfigService: TemplateConfigService) {}

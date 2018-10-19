@@ -1,0 +1,31 @@
+$drawer-width: 40%;
+
+.steps-builder__container {
+  display: flex;
+  min-height: 100%;
+  overflow-y: auto;
+}
+
+.steps-builder__draggable-list {
+  min-height: 100%;
+  flex: 1;
+}
+
+.steps-builder__config-templates {
+  width: $drawer-width;
+  background-color: #fff;
+  padding: 40px;
+  box-sizing: border-box;
+  box-shadow: -6px 0 6px rgba(0, 0, 0, 0.1);
+  min-height: 100%;
+  height: auto;
+}
+
+.steps-builder__section-header {
+  color: #939393;
+  margin-top: 0;
+}
+
+.steps-builder__group-header {
+  color: #4e545d;
+}

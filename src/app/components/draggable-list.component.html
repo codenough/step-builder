@@ -1,24 +1,12 @@
-<div class="draggable-list__container">
-    <div [dragula]="draggerContainerName" id="left" [(dragulaModel)]="newConfig">
-        <draggable-list-item *ngFor="let conf of newConfig; index as stepIndex; trackBy: trackByItemIdFn"
-        [class.hasParent]="conf.parentId !== '0'"
-        [class.hasChildren]="conf.children.size > 0"
-        [name]="conf.name"
-        [description]="conf.description"
-        [imageSource]="conf.image"
-        (showSettings)="openSettings(conf.typeId)"
-        (addConnection)="addRandomStep(stepIndex)">
-      </draggable-list-item>
-    </div>
-
-
-    <section class="draggable-list__config-templates">
-      <h1 class="draggable-list__section-header">Add Workflow Step</h1>
-      <h4 class="draggable-list__group-header">GROUP NAME</h4>
-      <template-list
-        [templates]="availableTemplates"
-        [containerName]="draggerContainerName"
-        [containerId]="templatesContainerId"></template-list>
-    </section>
+<div [dragula]="containerName" [id]="containerId" [(dragulaModel)]="templates" class="draggable-list__container">
+    <draggable-list-item *ngFor="let template of templates; index as stepIndex; trackBy: trackByFn"
+    [class.hasParent]="template.parentId !== '0'"
+    [class.hasChildren]="template.children.size > 0"
+    [name]="template.name"
+    [description]="template.description"
+    [imageSource]="template.image"
+    (showSettings)="openSettings(template.typeId)"
+    (addConnection)="addRandomStep(stepIndex)">
+  </draggable-list-item>
 </div>
 

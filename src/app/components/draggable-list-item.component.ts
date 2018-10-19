@@ -6,7 +6,6 @@ import {
   } from '@angular/core';
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'draggable-list-item',
   templateUrl: 'draggable-list-item.component.html',
   styleUrls: ['draggable-list-item.component.scss']

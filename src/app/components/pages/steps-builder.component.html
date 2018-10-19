@@ -1,0 +1,22 @@
+<div class="steps-builder__container">
+    <section class="steps-builder__draggable-list">
+      <draggable-list
+        [templates]="steps"
+        [containerName]="draggerContainerName"
+        [containerId]="stepsContainerId"
+        [options]="dragAndDropOptions"
+      ></draggable-list>
+    </section>
+
+
+    <section class="steps-builder__config-templates">
+      <h1 class="steps-builder__section-header">Add Workflow Step</h1>
+      <h4 class="steps-builder__group-header">GROUP NAME</h4>
+      <template-list
+        [templates]="availableTemplates"
+        [containerName]="draggerContainerName"
+        [containerId]="templatesContainerId">
+      </template-list>
+    </section>
+</div>
+

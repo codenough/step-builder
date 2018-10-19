@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 import { IStep, IStepDto } from '../services/template-config.service';
+import { BaseStepsList } from './base-steps-list';
+
 
 @Component({
   selector: 'template-list',
@@ -8,12 +10,8 @@ import { IStep, IStepDto } from '../services/template-config.service';
   styleUrls: ['template-list.component.scss']
 })
 
-export class TemplateListComponent {
-  @Input() templates: IStepDto[];
-  @Input() containerName: string;
-  @Input() containerId: string;
-
-  trackByItemTypeIdFn(index: number, item: IStep): string {
+export class TemplateListComponent extends BaseStepsList<IStepDto> {
+  trackByFn(index: number, item: IStep): string {
     return item.typeId;
   }
 }
