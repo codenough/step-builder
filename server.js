@@ -1,14 +1,16 @@
 import express from 'express';
+import path from 'path';
 import db from './db/db';
 import yamlConfigs from './db/yaml-configs';
-import bodyParser from 'body-parser';
 
 const app = express();
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+// Serve only the static files form the dist directory
+app.use(express.static(__dirname + '/dist/step-builder'));
+
+app.get('/', function(req,res) {
+
+res.sendFile(path.join(__dirname+'/dist/step-builder/index.html'));
 });
 
 app.get('/api/v1/templates', (req, res) => {
@@ -25,6 +27,6 @@ app.get('/api/v1/templates/:id', (req, res) => {
 
 const PORT = 5000;
 
-app.listen(PORT, () => {
-    console.log(`server running on port ${PORT}`)
-});
+// Start the app by listening on the default Heroku port
+app.listen(process.env.PORT || 5000);
+
