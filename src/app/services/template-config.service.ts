@@ -19,7 +19,7 @@ export interface IStepDto {
   image: string;
 }
 
-const templatesUrl = 'http://localhost:5000/api/v1/templates';
+const templatesUrl = '/api/v1/templates';
 
 @Injectable()
 export class TemplateConfigService {
