@@ -1,0 +1,9 @@
+.settings-dialog__body {
+  height: 460px;
+  width: 580px;
+  overflow: auto;
+}
+
+::ng-deep .CodeMirror-measure {
+  display: none;
+}

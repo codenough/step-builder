@@ -4,10 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { DragulaService } from 'ng2-dragula';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, flatMap } from 'rxjs/operators';
 import uuid4 from 'uuid4';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { IStep } from '../services/template-config.service';
+import { ValueTransformer } from '@angular/compiler/src/util';
+import { SettingsDialogComponent, IDialogData } from './settings-dialog.component';
 
 
 
@@ -21,6 +24,7 @@ import { IStep } from '../services/template-config.service';
 export class DraggableListComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
   draggerContainerName = 'STEPS';
+  code: string;
 
   newConfig: IStep[] = [];
 
@@ -28,7 +32,8 @@ export class DraggableListComponent implements OnInit, OnDestroy {
 
   constructor(private dragulaService: DragulaService,
               private route: ActivatedRoute,
-              private templateConfigService: TemplateConfigService) {}
+              private templateConfigService: TemplateConfigService,
+              private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.route.data
@@ -91,7 +96,17 @@ export class DraggableListComponent implements OnInit, OnDestroy {
 
   openSettings(id: string): void {
     this.templateConfigService.getYamlConfig(id)
-      .subscribe((v) => console.log(v));
+      .pipe(
+        flatMap((config) => {
+          const data: IDialogData<string> = {
+            value: config.yamlConfig,
+            header: 'Yaml Settings',
+            cancelButton: 'Close'
+          };
+          return this.dialog.open(SettingsDialogComponent, { width: '628px', data }).afterClosed();
+        })
+      )
+      .subscribe();
   }
 
   addRandomStep(index: number): void {

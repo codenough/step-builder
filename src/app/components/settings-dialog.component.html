@@ -1,0 +1,9 @@
+<h2>{{data.header}}</h2>
+<div class="settings-dialog__body">
+  <codemirror [(ngModel)]="data.value"
+    [config]="{readOnly: true, mode: 'text/x-yaml'}">
+  </codemirror>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">{{data.cancelButton}}</button>
+</div>
