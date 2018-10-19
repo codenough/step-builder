@@ -1,0 +1,7 @@
+  <div [dragula]="containerName" [id]="containerId" [(dragulaModel)]="templates" class="template-list__container">
+      <draggable-list-item *ngFor="let template of templates; trackBy: trackByItemTypeIdFn"
+        [name]="template.name"
+        [description]="template.description"
+        [imageSource]="template.image">
+      </draggable-list-item>
+  </div>

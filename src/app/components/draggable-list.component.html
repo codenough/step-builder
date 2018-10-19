@@ -13,16 +13,12 @@
 
 
     <section class="draggable-list__config-templates">
-        <h1 class="draggable-list__section-header">Add Workflow Step</h1>
-        <h4 class="draggable-list__group-header">GROUP NAME</h4>
-        <div [dragula]="draggerContainerName" id="right" [(dragulaModel)]="steps">
-            <draggable-list-item *ngFor="let step of steps; trackBy: trackByItemTypeIdFn"
-              [class.noConnections]="true"
-              [name]="step.name"
-              [description]="step.description"
-              [imageSource]="step.image">
-            </draggable-list-item>
-        </div>
+      <h1 class="draggable-list__section-header">Add Workflow Step</h1>
+      <h4 class="draggable-list__group-header">GROUP NAME</h4>
+      <template-list
+        [templates]="availableTemplates"
+        [containerName]="draggerContainerName"
+        [containerId]="templatesContainerId"></template-list>
     </section>
 </div>
 

@@ -16,6 +16,7 @@ import { HomeComponent } from './components/home.component';
 import { TemplateConfigResolver } from './services/template-config.resolver';
 import { TemplateConfigService } from './services/template-config.service';
 import { SettingsDialogComponent } from './components/settings-dialog.component';
+import { TemplateListComponent } from './components/template-list.component';
 
 
 const appRoutes: Routes = [
@@ -43,7 +44,8 @@ const appRoutes: Routes = [
     DraggableListItemComponent,
     DraggableListComponent,
     HomeComponent,
-    SettingsDialogComponent
+    SettingsDialogComponent,
+    TemplateListComponent
   ],
   imports: [
     BrowserModule,

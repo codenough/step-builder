@@ -15,13 +15,6 @@ $drawer-width: 40%;
   flex: 1;
 }
 
-#right {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-content: flex-start;
-}
-
 .draggable-list__config-templates {
   width: $drawer-width;
   background-color: #fff;

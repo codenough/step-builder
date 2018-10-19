@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { DragulaService } from 'ng2-dragula';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { map, takeUntil, flatMap } from 'rxjs/operators';
 import uuid4 from 'uuid4';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -24,11 +24,12 @@ import { SettingsDialogComponent, IDialogData } from './settings-dialog.componen
 export class DraggableListComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
   draggerContainerName = 'STEPS';
+  templatesContainerId = uuid4();
   code: string;
 
   newConfig: IStep[] = [];
 
-  steps: IStepDto[] = [];
+  availableTemplates: IStepDto[];
 
   constructor(private dragulaService: DragulaService,
               private route: ActivatedRoute,
@@ -41,18 +42,15 @@ export class DraggableListComponent implements OnInit, OnDestroy {
         takeUntil(this.ngUnsubscribe),
         map((data) => data.templates)
       )
-      .subscribe((templates: IStepDto[]) => {
-          this.steps = templates;
-      });
+      .subscribe((templates: IStepDto[]) => this.availableTemplates = templates);
 
     this.dragulaService.createGroup(this.draggerContainerName, {
       copy: (_el, source) => {
-        return source.id === 'right';
+        return source.id === this.templatesContainerId;
       },
       copyItem: (item) => _.cloneDeep(item),
-      accepts: (_el, target, _source, _sibling) => {
-        // To avoid dragging from right to left container
-        return target.id !== 'right';
+      accepts: (_el, target) => {
+        return target.id !== this.templatesContainerId;
       }
     });
 
@@ -90,10 +88,6 @@ export class DraggableListComponent implements OnInit, OnDestroy {
     return item.id;
   }
 
-  trackByItemTypeIdFn(index: number, item: IStep): string {
-    return item.typeId;
-  }
-
   openSettings(id: string): void {
     this.templateConfigService.getYamlConfig(id)
       .pipe(
@@ -110,9 +104,9 @@ export class DraggableListComponent implements OnInit, OnDestroy {
   }
 
   addRandomStep(index: number): void {
-    const randomIndex = _.random(0, this.steps.length - 1);
+    const randomIndex = _.random(0, this.availableTemplates.length - 1);
     const randomStep = {
-      ...this.steps[randomIndex],
+      ...this.availableTemplates[randomIndex],
       id: uuid4(),
       children: new Set<string>(),
       parentId: '0'
